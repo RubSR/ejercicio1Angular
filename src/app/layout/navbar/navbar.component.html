@@ -1,0 +1,31 @@
+<nav class="navbar bg-body-tertiary" style="background-color: #ecba51">
+  <div >
+    <button class="navbar-toggler mx-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <a class="navbar-brand" href="#">MI TIENDA</a>
+
+    <div class="offcanvas offcanvas-start" style="background-color: #f1c36d" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Mi tienda</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link " [routerLink]="['home']" >Home</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" [routerLink]="['estadisticas']">Estadísticas
+
+            </a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" [routerLink]="['articulos']">Articulos</a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</nav>
