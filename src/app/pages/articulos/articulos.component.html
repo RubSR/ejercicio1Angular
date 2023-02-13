@@ -1,8 +1,71 @@
 <div class="container-sm mt-5" style="max-width: 1080px !important; margin-bottom: 200px;">
+
+
+
+  <mat-chip-listbox >
+    <mat-chip-option *ngFor="let item of categorias"  (click)="selectReligion(item)">{{item}}</mat-chip-option>
+
+  </mat-chip-listbox>
+
   <div class="row">
-    <h2>Articulos</h2>
+    <h2 class="col-9">Articulos </h2>
+    <button  type="button" class="btn btn-primary  w-25 col-3 mb-3"  (click)="abrirFormualrio()">Crear articulo</button>
     <hr>
-      <div class="col-sm-12 col-md-6 col-xl-4 p-1 h-100">
+
+    <!--Formulario -->
+    <form [formGroup]="formulario" (submit)="addArticulo()" class="mb-5" *ngIf="mostrarForm" >
+
+      <!-- Nombre -->
+      <mat-form-field appearance="outline" class="col-2">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre">
+        <mat-error *ngIf="formulario.get('nombre')?.errors?.['required']">Nombre no puede estar vacio</mat-error>
+      </mat-form-field>
+
+
+      <!-- Descripcion -->
+      <mat-form-field appearance="outline" class="col-10">
+        <mat-label>Descripcion</mat-label>
+        <input matInput formControlName="descripcion">
+        <mat-error *ngIf="formulario.get('descripcion')?.errors?.['required']">Descripcion no puede estar vacio</mat-error>
+      </mat-form-field>
+
+      <!-- Categorias -->
+      <mat-form-field appearance="outline" class="col-4">
+        <mat-label>Categorias</mat-label>
+        <mat-select multiple formControlName="categorias">
+          <mat-option [value]="'Consolas'">Consolas</mat-option>
+          <mat-option [value]="'Videojuegos'">Videojuegos</mat-option>
+          <mat-option [value]="'Tecnologia'">Tecnologia</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <!-- Stock -->
+      <mat-form-field appearance="outline">
+        <mat-label>Stock</mat-label>
+        <input matInput formControlName="stock" type="number">
+        <mat-error *ngIf="formulario.get('stock')?.errors?.['required']">Stock no puede estar vacio</mat-error>
+      </mat-form-field>
+
+      <!-- Precio -->
+      <mat-form-field appearance="outline">
+        <mat-label>Precio</mat-label>
+        <input matInput formControlName="precio" type="number">
+        <mat-error *ngIf="formulario.get('precio')?.errors?.['required']">Precio no puede estar vacio</mat-error>
+      </mat-form-field>
+
+      <div>
+        <button type="submit" class="btn btn-success" >Guardar</button>
+      </div>
+
+
+
+
+    </form>
+
+
+      <div class="col-sm-12 col-md-6 col-xl-4 p-1 h-100" *ngFor="let art of articulosList">
         <div class="card">
 
           <div class="card-body row"
@@ -11,17 +74,17 @@
               <img src="../../../assets/images/ps5.jpg" class="img-fluid">
             </div>
             <div class="col-8" style="font-size: smaller">
-              <h6 class="card-title">PS5</h6>
-              <p class="card-text"><b>Descripcion:</b> Directa desde el futuro y con un diseño renovado en color blanco llega la Sony PS5 Stand C con un mando DualSense™ </p>
+              <h6 class="card-title">{{art.nombre}} <span *ngIf="art.stock <=0">Sin Existencias</span></h6>
+              <p class="card-text"><b>Descripcion:</b>{{art.descripcion}}</p>
               <p class="card-text"><b>Categorias:</b></p>
               <ul>
-                <li>Videojuegos</li>
-                <li>Consolas</li>
-                <li>Consolas</li>
-                <li>Consolas</li>
+                <li *ngFor="let cat of art.categorias">{{cat}}</li>
+
               </ul>
-              <p class="card-text"><b>Precio:</b> 600€</p>
-              <p class="card-text"><b>Stock:</b> 25</p>
+              <p class="card-text" ><b>Precio:</b>
+                <span [ngClass]="art.precio > 600 ? 'rojo' : 'verde'">{{art.precio}}</span>
+              </p>
+              <p class="card-text"><b>Stock:</b>{{art.stock}}</p>
 
 
             </div>
@@ -31,141 +94,6 @@
 
         </div>
       </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 p-1">
-      <div class="card h-100">
-
-        <div class="card-body row"
-        >
-          <div class="col-4">
-            <img src="../../../assets/images/ps5.jpg" class="img-fluid">
-          </div>
-          <div class="col-8" style="font-size: smaller">
-            <h6 class="card-title">PS5</h6>
-            <p class="card-text"><b>Descripcion:</b> Directa desde el futuro y con un diseño renovado en color blanco llega la Sony PS5 Stand C con un mando DualSense™ </p>
-            <p class="card-text"><b>Categorias:</b></p>
-            <ul>
-              <li>Videojuegos</li>
-              <li>Consolas</li>
-            </ul>
-            <p class="card-text"><b>Precio:</b> 600€</p>
-            <p class="card-text"><b>Stock:</b> 25</p>
-
-
-          </div>
-
-
-        </div>
-
-      </div>
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 p-1">
-      <div class="card h-100">
-
-        <div class="card-body row"
-        >
-          <div class="col-4">
-            <img src="../../../assets/images/ps5.jpg" class="img-fluid">
-          </div>
-          <div class="col-8" style="font-size: smaller">
-            <h6 class="card-title">PS5</h6>
-            <p class="card-text"><b>Descripcion:</b> Directa desde el futuro y con un diseño renovado en color blanco llega la Sony PS5 Stand C con un mando DualSense™ </p>
-            <p class="card-text"><b>Categorias:</b></p>
-            <ul>
-              <li>Videojuegos</li>
-              <li>Consolas</li>
-            </ul>
-            <p class="card-text"><b>Precio:</b> 600€</p>
-            <p class="card-text"><b>Stock:</b> 25</p>
-
-
-          </div>
-
-
-        </div>
-
-      </div>
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 p-1">
-      <div class="card h-100">
-
-        <div class="card-body row"
-        >
-          <div class="col-4">
-            <img src="../../../assets/images/ps5.jpg" class="img-fluid">
-          </div>
-          <div class="col-8" style="font-size: smaller">
-            <h6 class="card-title">PS5</h6>
-            <p class="card-text"><b>Descripcion:</b> Directa desde el futuro y con un diseño renovado en color blanco llega la Sony PS5 Stand C con un mando DualSense™ </p>
-            <p class="card-text"><b>Categorias:</b></p>
-            <ul>
-              <li>Videojuegos</li>
-              <li>Consolas</li>
-            </ul>
-            <p class="card-text"><b>Precio:</b> 600€</p>
-            <p class="card-text"><b>Stock:</b> 25</p>
-
-
-          </div>
-
-
-        </div>
-
-      </div>
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 p-1">
-      <div class="card h-100">
-
-        <div class="card-body row"
-        >
-          <div class="col-4">
-            <img src="../../../assets/images/ps5.jpg" class="img-fluid">
-          </div>
-          <div class="col-8" style="font-size: smaller">
-            <h6 class="card-title">PS5</h6>
-            <p class="card-text"><b>Descripcion:</b> Directa desde el futuro y con un diseño renovado en color blanco llega la Sony PS5 Stand C con un mando DualSense™ </p>
-            <p class="card-text"><b>Categorias:</b></p>
-            <ul>
-              <li>Videojuegos</li>
-              <li>Consolas</li>
-            </ul>
-            <p class="card-text"><b>Precio:</b> 600€</p>
-            <p class="card-text"><b>Stock:</b> 25</p>
-
-
-          </div>
-
-
-        </div>
-
-      </div>
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 p-1">
-      <div class="card h-100">
-
-        <div class="card-body row"
-        >
-          <div class="col-4">
-            <img src="../../../assets/images/ps5.jpg" class="img-fluid">
-          </div>
-          <div class="col-8" style="font-size: smaller">
-            <h6 class="card-title">PS5</h6>
-            <p class="card-text"><b>Descripcion:</b> Directa desde el futuro y con un diseño renovado en color blanco llega la Sony PS5 Stand C con un mando DualSense™ </p>
-            <p class="card-text"><b>Categorias:</b></p>
-            <ul>
-              <li>Videojuegos</li>
-              <li>Consolas</li>
-            </ul>
-            <p class="card-text"><b>Precio:</b> 600€</p>
-            <p class="card-text"><b>Stock:</b> 25</p>
-
-
-          </div>
-
-
-        </div>
-
-      </div>
-    </div>
 
 
 
